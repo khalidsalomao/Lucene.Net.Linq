@@ -12,6 +12,8 @@ using System.Runtime.InteropServices;
 [assembly: CLSCompliant(true)]
 
 [assembly: Guid("0f910a47-3f2b-40bf-bb54-3d54bef6274b")]
+[assembly: AssemblyVersion ("3.5.3.98")]
+[assembly: AssemblyFileVersion ("3.5.3.98")]
 
 #if DEBUG
 [assembly: InternalsVisibleTo("Lucene.Net.Linq.Tests")]
