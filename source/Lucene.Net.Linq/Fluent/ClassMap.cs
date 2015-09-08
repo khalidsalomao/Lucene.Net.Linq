@@ -39,9 +39,21 @@ namespace Lucene.Net.Linq.Fluent
         {
             var propInfo = GetMemberInfo<PropertyInfo>(expression.Body);
 
-            var part = new PropertyMap<T>(this, propInfo);
+            return AddProperty(propInfo);
+        }
 
-            properties.Add(part);
+        /// <summary>
+        /// Maps the property contained in <paramref name="propertyInfo"/> 
+        /// to a Lucene field.
+        /// </summary>
+        /// <param name="propertyInfo">The property info.</param>
+        /// <returns>A <see cref="PropertyMap{T}"/> that allows further customizatoin of
+        /// how the field will be analyzed, stored and indexed.</returns>
+        public PropertyMap<T> AddProperty(PropertyInfo propertyInfo)
+        {
+            var part = new PropertyMap<T>(this, propertyInfo);
+
+            AddProperty(part);
 
             return part;
         }
@@ -58,9 +70,25 @@ namespace Lucene.Net.Linq.Fluent
         {
             var propInfo = GetMemberInfo<PropertyInfo>(expression.Body);
 
-            var part = new PropertyMap<T>(this, propInfo, isKey:true);
+            return AddKey(propInfo);
+        }
 
-            properties.Add(part);
+        /// <summary>
+        /// Defines a property, similarly to <see cref="Property"/>, that acts
+        /// as part of a unique key that identifies a <see cref="Document"/>
+        /// and ensures that only one instance of that document will be present
+        /// in an Index. May be specified for multiple properties to create
+        /// a composite key, and may also be specified in addition to using
+        /// <see cref="DocumentKey"/>.
+        /// </summary>
+        /// <param name="propertyInfo">The property info.</param>
+        /// <returns>A <see cref="PropertyMap{T}"/> that allows further customizatoin of
+        /// how the field will be analyzed, stored and indexed.</returns>
+        public PropertyMap<T> AddKey(PropertyInfo propertyInfo)
+        {
+            var part = new PropertyMap<T>(this, propertyInfo, isKey: true);
+
+            AddProperty(part);
 
             return part;
         }
